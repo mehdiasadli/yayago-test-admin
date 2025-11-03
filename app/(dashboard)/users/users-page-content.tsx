@@ -1,6 +1,6 @@
 'use client';
 
-import { createGetUsersQueryOptions } from '@/api/users/users.queries';
+import { createGetUsersQueryOptions } from '@/features/users/users.queries';
 import { UsersTable } from '@/components/users/users-table';
 import { useQuery } from '@tanstack/react-query';
 import { useUsersTableQueries } from '@/components/users/use-users-queries';

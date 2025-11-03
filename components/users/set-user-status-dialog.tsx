@@ -7,7 +7,7 @@ import { Loader2, Pencil, CheckCircle2, XCircle } from 'lucide-react';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { Textarea } from '../ui/textarea';
-import { useSetUserStatusMutation } from '@/api/users/users.mutations';
+import { useSetUserStatusMutation } from '@/features/users/users.mutations';
 import { Controller, useForm } from 'react-hook-form';
 import { SetUserStatusRequestSchema, SetUserStatusRequestSchemaType } from '@/schemas/users.schema';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -1,6 +1,6 @@
 'use client';
 
-import { createGetVehiclesQueryOptions } from '@/api/vehicles/vehicles.queries';
+import { createGetVehiclesQueryOptions } from '@/features/vehicles/vehicles.queries';
 import { VehiclesTable } from '@/components/vehicles/vehicles-table';
 import { useQuery } from '@tanstack/react-query';
 import { useVehiclesTableQueries } from '@/components/vehicles/use-vehicles-queries';

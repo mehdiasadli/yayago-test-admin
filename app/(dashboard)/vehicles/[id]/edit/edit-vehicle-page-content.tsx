@@ -1,7 +1,7 @@
 'use client';
 
 import { EditVehicleForm } from '@/components/forms/edit-vehicle-form';
-import { createGetVehicleByIdQueryOptions } from '@/api/vehicles/vehicles.queries';
+import { createGetVehicleByIdQueryOptions } from '@/features/vehicles/vehicles.queries';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';

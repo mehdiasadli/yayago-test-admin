@@ -1,6 +1,6 @@
 'use client';
 
-import { createGetDashboardStatsQueryOptions } from '@/api/dashboard/dashboard.queries';
+import { createGetDashboardStatsQueryOptions } from '@/features/dashboard/dashboard.queries';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';

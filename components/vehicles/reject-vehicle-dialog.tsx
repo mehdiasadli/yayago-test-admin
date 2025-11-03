@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { ThumbsDown } from 'lucide-react';
-import { useRejectVehicleMutation } from '@/api/vehicles/vehicles.mutations';
+import { useRejectVehicleMutation } from '@/features/vehicles/vehicles.mutations';
 import { toast } from 'sonner';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 

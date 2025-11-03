@@ -3,7 +3,7 @@
 import {
   createGetVehicleByIdQueryOptions,
   createGetVehicleBookingsQueryOptions,
-} from '@/api/vehicles/vehicles.queries';
+} from '@/features/vehicles/vehicles.queries';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';

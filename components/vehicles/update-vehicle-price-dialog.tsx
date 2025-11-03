@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { DollarSign } from 'lucide-react';
-import { useUpdateVehiclePriceMutation } from '@/api/vehicles/vehicles.mutations';
+import { useUpdateVehiclePriceMutation } from '@/features/vehicles/vehicles.mutations';
 import { toast } from 'sonner';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';

@@ -19,7 +19,7 @@ import {
   VehicleSchemaType,
 } from '@/schemas/vehicles.schema';
 import { Loader2, Car, DollarSign, Settings, FileText, Gauge } from 'lucide-react';
-import { useUpdateVehicleMutation } from '@/api/vehicles/vehicles.mutations';
+import { useUpdateVehicleMutation } from '@/features/vehicles/vehicles.mutations';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

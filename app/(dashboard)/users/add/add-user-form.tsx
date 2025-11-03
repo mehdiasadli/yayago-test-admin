@@ -3,7 +3,7 @@
 import { CreateUserRequestSchema, CreateUserRequestSchemaType } from '@/schemas/users.schema';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCreateUserMutation } from '@/api/users/users.mutations';
+import { useCreateUserMutation } from '@/features/users/users.mutations';
 import { toast } from 'sonner';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';

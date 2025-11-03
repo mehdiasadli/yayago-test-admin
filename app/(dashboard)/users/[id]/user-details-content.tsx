@@ -1,6 +1,6 @@
 'use client';
 
-import { createGetUserByIdQueryOptions, createGetUserBookingsQueryOptions } from '@/api/users/users.queries';
+import { createGetUserByIdQueryOptions, createGetUserBookingsQueryOptions } from '@/features/users/users.queries';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

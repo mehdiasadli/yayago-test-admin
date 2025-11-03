@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Trash2 } from 'lucide-react';
-import { useDeleteVehicleMutation } from '@/api/vehicles/vehicles.mutations';
+import { useDeleteVehicleMutation } from '@/features/vehicles/vehicles.mutations';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';

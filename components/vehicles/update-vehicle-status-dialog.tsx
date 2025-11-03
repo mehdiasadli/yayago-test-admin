@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Power } from 'lucide-react';
-import { useUpdateVehicleStatusMutation } from '@/api/vehicles/vehicles.mutations';
+import { useUpdateVehicleStatusMutation } from '@/features/vehicles/vehicles.mutations';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';

@@ -15,7 +15,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CreateVehicleRequestSchema, CreateVehicleRequestSchemaType } from '@/schemas/vehicles.schema';
 import { Loader2, Car, DollarSign, Settings, FileText, Gauge } from 'lucide-react';
-import { useCreateVehicleMutation } from '@/api/vehicles/vehicles.mutations';
+import { useCreateVehicleMutation } from '@/features/vehicles/vehicles.mutations';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

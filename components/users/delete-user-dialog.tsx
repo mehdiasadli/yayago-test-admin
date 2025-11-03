@@ -12,7 +12,7 @@ import {
 } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Loader2, Trash2, AlertTriangle } from 'lucide-react';
-import { useDeleteUserMutation } from '@/api/users/users.mutations';
+import { useDeleteUserMutation } from '@/features/users/users.mutations';
 import { useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';

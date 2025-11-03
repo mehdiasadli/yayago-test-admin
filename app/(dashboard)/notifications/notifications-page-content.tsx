@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
-import { createGetNotificationsByUserQueryOptions } from '@/api/notifications/notifications.queries';
+import { createGetNotificationsByUserQueryOptions } from '@/features/notifications/notifications.queries';
 import {
   useCreateNotificationMutation,
   useProcessPendingNotificationsMutation,
   useRetryFailedNotificationsMutation,
-} from '@/api/notifications/notifications.mutations';
+} from '@/features/notifications/notifications.mutations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

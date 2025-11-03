@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, X, CheckCircle2, Loader2, Image as ImageIcon, Star, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { toast } from 'sonner';
-import { bulkUploadImages } from '@/api/car-images/car-images.api';
+import { bulkUploadImages } from '@/features/car-images/car-images.api';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
@@ -13,9 +13,9 @@ import {
   useSetPrimaryImageMutation,
   useApproveImageMutation,
   useRejectImageMutation,
-} from '@/api/car-images/car-images.mutations';
+} from '@/features/car-images/car-images.mutations';
 import { useQuery } from '@tanstack/react-query';
-import { createGetVehicleByIdQueryOptions } from '@/api/vehicles/vehicles.queries';
+import { createGetVehicleByIdQueryOptions } from '@/features/vehicles/vehicles.queries';
 
 interface ImageUploadState {
   file: File;

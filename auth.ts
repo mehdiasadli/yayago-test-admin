@@ -140,10 +140,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       // Check if token needs refresh
-      const timeUntilExpiry = token.expiresAt - Math.floor(Date.now() / 1000);
-      const shouldRefresh = timeUntilExpiry < REFRESH_TOKEN_TTL;
+      const now = Math.floor(Date.now() / 1000);
+      const isExpired = token.expiresAt <= now;
+      const shouldProactivelyRefresh = token.expiresAt - now < 60;
 
-      if (shouldRefresh) {
+      if (isExpired || shouldProactivelyRefresh) {
         try {
           console.log('Refreshing token...');
 

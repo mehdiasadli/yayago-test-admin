@@ -8,7 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, LoginSchemaType } from '@/schemas/auth.schema';
 import { Loader2 } from 'lucide-react';
-import { login } from '@/api/auth/auth.actions';
+import { login } from '@/features/auth/auth.actions';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useState } from 'react';

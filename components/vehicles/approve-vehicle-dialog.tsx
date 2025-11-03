@@ -14,7 +14,7 @@ import {
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { ThumbsUp } from 'lucide-react';
 import { toast } from 'sonner';
-import { useApproveVehicleMutation } from '@/api/vehicles/vehicles.mutations';
+import { useApproveVehicleMutation } from '@/features/vehicles/vehicles.mutations';
 
 interface ApproveVehicleDialogProps {
   carId: number;
