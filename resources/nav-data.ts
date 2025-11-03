@@ -1,4 +1,4 @@
-import { Bell, Calendar, Car, Home, LucideIcon, Settings, Users } from 'lucide-react';
+import { Bell, Calendar, Car, Globe, Home, LucideIcon, Settings, Users } from 'lucide-react';
 
 export const mainNavigationLinks: MainNavigationLink[] = [
   {
@@ -24,6 +24,11 @@ export const mainNavigationLinks: MainNavigationLink[] = [
 ];
 
 export const secondaryNavigationLinks: SecondaryNavigationLink[] = [
+  {
+    title: 'Public Website',
+    url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+    icon: Globe,
+  },
   {
     title: 'Settings',
     url: '/settings',

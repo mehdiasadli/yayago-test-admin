@@ -25,8 +25,17 @@ export default async function AuthPage() {
           <span className='flex items-center gap-2 font-medium'>yayaGo</span>
         </Link>
         <div className='flex flex-1 items-center justify-center'>
-          <div className='w-full max-w-sm'>
+          <div className='flex w-full max-w-sm flex-col gap-4'>
             <LoginForm />
+            <span className='text-sm text-center'>
+              or go to the{' '}
+              <Link
+                href={process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}
+                className='text-blue-500 hover:underline'
+              >
+                public website
+              </Link>
+            </span>
           </div>
         </div>
       </div>
