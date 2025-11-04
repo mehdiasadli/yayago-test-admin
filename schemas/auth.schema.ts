@@ -21,6 +21,7 @@ export const LoginResponseSchema = z.object({
   token: z.string(),
   refreshToken: z.string(),
   userId: z.number().positive(),
+  role: z.string(),
 });
 
 export const LoginUserResponseSchema = UserSchema;

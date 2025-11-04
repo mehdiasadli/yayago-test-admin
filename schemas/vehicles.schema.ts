@@ -49,6 +49,8 @@ export const CarStatusEnum = z.enum([
   'DISABLED',
 ]);
 
+export const ImageStatusEnum = z.enum(['PENDING', 'APPROVED', 'REJECTED']);
+
 // IMAGE SCHEMA
 export const ImageSchema = z.object({
   id: idSchema(),
@@ -60,6 +62,7 @@ export const ImageSchema = z.object({
   isPrimary: z.boolean(),
   uploadDate: z.coerce.date(),
   createdAt: z.coerce.date(),
+  status: ImageStatusEnum,
 });
 
 // MAIN VEHICLE/CAR SCHEMA

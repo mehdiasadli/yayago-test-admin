@@ -1,6 +1,8 @@
 import z from 'zod';
 import { idSchema } from './common.schema';
 
+export const ImageStatusEnum = z.enum(['PENDING', 'APPROVED', 'REJECTED']);
+
 // IMAGE SCHEMA (already defined in vehicles.schema, but including here for completeness)
 export const CarImageSchema = z.object({
   id: idSchema(),
@@ -12,6 +14,7 @@ export const CarImageSchema = z.object({
   isPrimary: z.boolean(),
   uploadDate: z.coerce.date(),
   createdAt: z.coerce.date(),
+  status: ImageStatusEnum,
 });
 
 // PARAMS
@@ -114,6 +117,8 @@ export type DeleteImageResponseSchemaType = z.infer<typeof DeleteImageResponseSc
 
 export type DeleteAllCarImagesParamSchemaType = z.infer<typeof DeleteAllCarImagesParamSchema>;
 export type DeleteAllCarImagesResponseSchemaType = z.infer<typeof DeleteAllCarImagesResponseSchema>;
+
+export type ImageStatusEnumType = z.infer<typeof ImageStatusEnum>;
 
 // Helper types for bulk upload progress tracking
 export type ImageUploadProgress = {

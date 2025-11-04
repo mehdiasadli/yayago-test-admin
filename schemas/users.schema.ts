@@ -3,11 +3,14 @@ import { BookingSchema } from './bookings.schema';
 import { idSchema } from './common.schema';
 
 // COMMON
+export const UserRoleEnum = z.enum(['USER', 'ADMIN']);
+
 export const UserSchema = z.object({
   id: idSchema(),
   email: z.string(),
   fullName: z.string(),
   phoneNumber: z.string(),
+  role: UserRoleEnum,
   active: z.boolean(),
   createdAt: z.coerce.date(),
   lastLoginAt: z.coerce.date().nullable(),
@@ -73,6 +76,7 @@ export const GetUserBookingsActiveCountResponseSchema = z.number();
 
 // === TYPES ===
 
+export type UserRoleEnumType = z.infer<typeof UserRoleEnum>;
 export type UserSchemaType = z.infer<typeof UserSchema>;
 export type UserParamSchemaType = z.infer<typeof UserParamSchema>;
 

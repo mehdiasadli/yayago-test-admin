@@ -74,6 +74,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           console.log('Login request successful:', loginData);
 
+          // Check if user is ADMIN
+          if (loginData.role !== 'ADMIN') {
+            console.error('Access denied: User is not an admin');
+            return null;
+          }
+
           console.log(`Sending user request to /api/users/${loginData.userId}...`);
 
           const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/users/${loginData.userId}`, {
