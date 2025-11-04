@@ -4,9 +4,10 @@ import { RejectVehicleDialog } from '@/components/vehicles/reject-vehicle-dialog
 import { UpdateVehiclePriceDialog } from '@/components/vehicles/update-vehicle-price-dialog';
 import { UpdateVehicleStatusDialog } from '@/components/vehicles/update-vehicle-status-dialog';
 import { VehicleSchemaType } from '@/schemas/vehicles.schema';
-import { Edit, EllipsisVerticalIcon, Link } from 'lucide-react';
+import { Edit, EllipsisVerticalIcon } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { DeleteVehicleDialog } from '@/components/vehicles/delete-vehicle-dialog';
+import Link from 'next/link';
 
 interface VehicleDetailsHeaderActionsProps {
   vehicle: VehicleSchemaType;
