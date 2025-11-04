@@ -4,12 +4,14 @@ import {
   createGetVehicleByIdQueryOptions,
   createGetVehicleBookingsQueryOptions,
 } from '@/features/vehicles/vehicles.queries';
+import { createGetReviewsByCarIdQueryOptions } from '@/features/reviews/reviews.queries';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BookingCard } from '@/components/bookings/booking-card';
+import { ReviewCard } from '@/components/reviews/review-card';
 import {
   Calendar,
   Car,
@@ -22,6 +24,8 @@ import {
   Settings,
   TrendingUp,
   ShoppingBag,
+  Star,
+  MessageSquare,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -41,6 +45,7 @@ interface VehicleDetailsContentProps {
 export function VehicleDetailsContent({ carId }: VehicleDetailsContentProps) {
   const { data: vehicle, isLoading } = useQuery(createGetVehicleByIdQueryOptions({ carId }));
   const { data: bookings, isLoading: isLoadingBookings } = useQuery(createGetVehicleBookingsQueryOptions({ carId }));
+  const { data: reviews, isLoading: isLoadingReviews } = useQuery(createGetReviewsByCarIdQueryOptions({ carId }));
 
   if (isLoading) {
     return (
@@ -486,6 +491,73 @@ export function VehicleDetailsContent({ carId }: VehicleDetailsContentProps) {
             <div className='text-center py-8'>
               <ShoppingBag className='h-12 w-12 text-muted-foreground mx-auto mb-4' />
               <p className='text-sm text-muted-foreground'>No bookings found for this vehicle</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Vehicle Reviews Section */}
+      <Card>
+        <CardHeader>
+          <div className='flex items-center justify-between'>
+            <div>
+              <CardTitle className='flex items-center gap-2'>
+                <MessageSquare className='h-5 w-5' />
+                Customer Reviews
+              </CardTitle>
+              <CardDescription>
+                {reviews && reviews.length > 0 ? (
+                  <div className='flex items-center gap-4 mt-2'>
+                    <div className='flex items-center gap-2'>
+                      <div className='flex items-center gap-1'>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <Star
+                            key={index}
+                            className={`h-4 w-4 ${
+                              vehicle?.averageRating && index < Math.round(vehicle.averageRating)
+                                ? 'fill-yellow-400 text-yellow-400'
+                                : 'fill-muted text-muted-foreground'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      {vehicle?.averageRating && (
+                        <span className='text-sm font-semibold text-foreground'>
+                          {vehicle.averageRating.toFixed(1)}
+                        </span>
+                      )}
+                    </div>
+                    <span className='text-sm text-muted-foreground'>
+                      Based on {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
+                    </span>
+                  </div>
+                ) : (
+                  'Customer feedback and ratings'
+                )}
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {isLoadingReviews ? (
+            <div className='space-y-4'>
+              <Skeleton className='h-32' />
+              <Skeleton className='h-32' />
+              <Skeleton className='h-32' />
+            </div>
+          ) : reviews && reviews.length > 0 ? (
+            <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} showActions={false} />
+              ))}
+            </div>
+          ) : (
+            <div className='text-center py-8'>
+              <MessageSquare className='h-12 w-12 text-muted-foreground mx-auto mb-4' />
+              <p className='text-sm text-muted-foreground'>No reviews yet for this vehicle</p>
+              <p className='text-xs text-muted-foreground mt-1'>
+                Reviews will appear here once customers start rating this vehicle
+              </p>
             </div>
           )}
         </CardContent>
