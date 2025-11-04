@@ -10,16 +10,18 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ReviewSchemaType } from '@/schemas/reviews.schema';
 import { format } from 'date-fns';
-import { EllipsisVerticalIcon, Star, Trash2 } from 'lucide-react';
+import { EllipsisVerticalIcon, Star, Trash2, Car } from 'lucide-react';
 import { useDeleteReviewMutation } from '@/features/reviews/reviews.mutations';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 interface ReviewCardProps {
   review: ReviewSchemaType;
   showActions?: boolean;
+  variant?: 'user' | 'vehicle'; // 'user' shows user info (default), 'vehicle' shows car info
 }
 
-export function ReviewCard({ review, showActions = true }: ReviewCardProps) {
+export function ReviewCard({ review, showActions = true, variant = 'user' }: ReviewCardProps) {
   const deleteReviewMutation = useDeleteReviewMutation();
 
   const handleDeleteReview = async () => {
@@ -68,22 +70,44 @@ export function ReviewCard({ review, showActions = true }: ReviewCardProps) {
     <Card className='relative'>
       <CardHeader className='pb-3'>
         <div className='flex items-start justify-between gap-2'>
-          <div className='flex items-center gap-3'>
-            <Avatar className='h-10 w-10'>
-              <AvatarFallback className='bg-primary/10 text-primary font-semibold'>
-                {getInitials(review.userFullName)}
-              </AvatarFallback>
-            </Avatar>
-            <div className='space-y-1'>
-              <div className='flex items-center gap-2'>
-                <h4 className='font-semibold text-sm'>{review.userFullName}</h4>
-                <Badge variant={getRatingColor(review.rating)} className='text-xs px-2 py-0 h-5'>
-                  {review.rating}.0
-                </Badge>
+          {variant === 'user' ? (
+            // Show user information (for vehicle details page)
+            <div className='flex items-center gap-3'>
+              <Avatar className='h-10 w-10'>
+                <AvatarFallback className='bg-primary/10 text-primary font-semibold'>
+                  {getInitials(review.userFullName)}
+                </AvatarFallback>
+              </Avatar>
+              <div className='space-y-1'>
+                <div className='flex items-center gap-2'>
+                  <h4 className='font-semibold text-sm'>{review.userFullName}</h4>
+                  <Badge variant={getRatingColor(review.rating)} className='text-xs px-2 py-0 h-5'>
+                    {review.rating}.0
+                  </Badge>
+                </div>
+                <div className='flex items-center gap-2'>{renderStars(review.rating)}</div>
               </div>
-              <div className='flex items-center gap-2'>{renderStars(review.rating)}</div>
             </div>
-          </div>
+          ) : (
+            // Show vehicle information (for user details page)
+            <Link
+              href={`/vehicles/${review.carId}`}
+              className='flex items-center gap-3 hover:opacity-80 transition-opacity'
+            >
+              <div className='h-10 w-10 rounded-lg bg-muted flex items-center justify-center'>
+                <Car className='h-5 w-5 text-muted-foreground' />
+              </div>
+              <div className='space-y-1'>
+                <div className='flex items-center gap-2'>
+                  <h4 className='font-semibold text-sm'>Vehicle #{review.carId}</h4>
+                  <Badge variant={getRatingColor(review.rating)} className='text-xs px-2 py-0 h-5'>
+                    {review.rating}.0
+                  </Badge>
+                </div>
+                <div className='flex items-center gap-2'>{renderStars(review.rating)}</div>
+              </div>
+            </Link>
+          )}
           {showActions && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
