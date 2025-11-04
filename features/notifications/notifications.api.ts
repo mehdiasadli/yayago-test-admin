@@ -6,7 +6,7 @@ import {
   GetNotificationByIdParamsSchema,
   GetNotificationsByUserParams,
   GetNotificationsByUserParamsSchema,
-  Notification,
+  NotificationSchemaType,
   NotificationArraySchema,
   NotificationSchema,
 } from '@/schemas/notifications.schema';
@@ -15,7 +15,7 @@ import {
  * Create a new notification manually (Admin only)
  * POST /api/notifications
  */
-export async function createNotification(request: CreateNotificationRequest): Promise<Notification> {
+export async function createNotification(request: CreateNotificationRequest): Promise<NotificationSchemaType> {
   const validatedRequest = CreateNotificationRequestSchema.parse(request);
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notifications`, {
@@ -66,7 +66,7 @@ export async function processPendingNotifications(): Promise<void> {
  * Get notification by ID
  * GET /api/notifications/{id}
  */
-export async function getNotificationById(params: GetNotificationByIdParams): Promise<Notification> {
+export async function getNotificationById(params: GetNotificationByIdParams): Promise<NotificationSchemaType> {
   const validatedParams = GetNotificationByIdParamsSchema.parse(params);
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notifications/${validatedParams.id}`, {
@@ -86,7 +86,7 @@ export async function getNotificationById(params: GetNotificationByIdParams): Pr
  * Get all notifications for a specific user
  * GET /api/notifications/user/{userId}
  */
-export async function getNotificationsByUser(params: GetNotificationsByUserParams): Promise<Notification[]> {
+export async function getNotificationsByUser(params: GetNotificationsByUserParams): Promise<NotificationSchemaType[]> {
   const validatedParams = GetNotificationsByUserParamsSchema.parse(params);
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notifications/user/${validatedParams.userId}`, {

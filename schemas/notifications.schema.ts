@@ -45,7 +45,7 @@ export const NotificationSchema = z.object({
   createdAt: z.string(),
 });
 
-export type Notification = z.infer<typeof NotificationSchema>;
+export type NotificationSchemaType = z.infer<typeof NotificationSchema>;
 
 // Get Notifications by User Params Schema
 export const GetNotificationsByUserParamsSchema = z.object({

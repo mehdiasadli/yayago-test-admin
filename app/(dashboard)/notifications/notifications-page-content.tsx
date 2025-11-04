@@ -32,7 +32,7 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import {
-  Notification,
+  NotificationSchemaType,
   NotificationStatus,
   NotificationType,
   NotificationTypeEnum,
@@ -52,7 +52,7 @@ export function NotificationsPageContent() {
   const userId = session?.user?.id ? Number(session.user.id) : 0;
 
   const [statusFilter, setStatusFilter] = useState<NotificationStatus | 'ALL'>('ALL');
-  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
+  const [selectedNotification, setSelectedNotification] = useState<NotificationSchemaType | null>(null);
 
   // Queries
   const { data: notifications, isLoading } = useQuery({
@@ -489,7 +489,13 @@ function CreateNotificationDialog({
 }
 
 // Notification Details Dialog Component
-function NotificationDetailsDialog({ notification, onClose }: { notification: Notification; onClose: () => void }) {
+function NotificationDetailsDialog({
+  notification,
+  onClose,
+}: {
+  notification: NotificationSchemaType;
+  onClose: () => void;
+}) {
   return (
     <Dialog open={true} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className='max-w-3xl max-h-[90vh] overflow-y-auto'>
