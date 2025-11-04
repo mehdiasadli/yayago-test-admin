@@ -5,7 +5,12 @@ import { UpdateVehiclePriceDialog } from '@/components/vehicles/update-vehicle-p
 import { UpdateVehicleStatusDialog } from '@/components/vehicles/update-vehicle-status-dialog';
 import { VehicleSchemaType } from '@/schemas/vehicles.schema';
 import { Edit, EllipsisVerticalIcon } from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { DeleteVehicleDialog } from '@/components/vehicles/delete-vehicle-dialog';
 import Link from 'next/link';
 
@@ -16,12 +21,6 @@ interface VehicleDetailsHeaderActionsProps {
 export default function VehicleDetailsHeaderActions({ vehicle }: VehicleDetailsHeaderActionsProps) {
   return (
     <div className='flex items-center gap-2'>
-      {vehicle.status === 'PENDING' && (
-        <>
-          <ApproveVehicleDialog carId={vehicle.id} vehicleName={`${vehicle.brand} ${vehicle.model}`} variant='button' />
-          <RejectVehicleDialog carId={vehicle.id} vehicleName={`${vehicle.brand} ${vehicle.model}`} variant='button' />
-        </>
-      )}
       <UpdateVehicleStatusDialog
         carId={vehicle.id}
         currentStatus={vehicle.available}
@@ -33,12 +32,6 @@ export default function VehicleDetailsHeaderActions({ vehicle }: VehicleDetailsH
         currency={vehicle.currency}
         vehicleName={`${vehicle.brand} ${vehicle.model}`}
       />
-      <Button asChild variant='outline' size='sm'>
-        <Link href={`/vehicles/${vehicle.id}/edit`}>
-          <Edit className='h-4 w-4' />
-          Edit
-        </Link>
-      </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' size='icon'>
@@ -46,6 +39,12 @@ export default function VehicleDetailsHeaderActions({ vehicle }: VehicleDetailsH
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>
+          <DropdownMenuItem asChild>
+            <Link href={`/vehicles/${vehicle.id}/edit`}>
+              <Edit className='h-4 w-4' />
+              Edit
+            </Link>
+          </DropdownMenuItem>
           {vehicle.status === 'PENDING' && (
             <>
               <ApproveVehicleDialog carId={vehicle.id} vehicleName={`${vehicle.brand} ${vehicle.model}`} />
