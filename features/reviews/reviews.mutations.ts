@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addReview, deleteReview, updateReview } from './reviews.api';
+import { addReview, deleteReview, deleteReviewByAdmin, updateReview } from './reviews.api';
 import { reviewsKeys } from './reviews.keys';
 import {
   AddReviewRequestSchemaType,
+  DeleteReviewByAdminParamSchemaType,
   DeleteReviewParamSchemaType,
   UpdateReviewParamSchemaType,
   UpdateReviewRequestSchemaType,
@@ -47,6 +48,23 @@ export function useDeleteReviewMutation() {
     mutationFn: ({ params, carId }: { params: DeleteReviewParamSchemaType; carId: number }) => deleteReview(params),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: reviewsKeys.myReviews() });
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.byCarId({ carId: variables.carId }) });
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.reviewCount({ carId: variables.carId }) });
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.averageRating({ carId: variables.carId }) });
+    },
+  });
+}
+
+// DELETE REVIEW BY ADMIN
+export function useDeleteReviewByAdminMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ params, carId }: { params: DeleteReviewByAdminParamSchemaType; carId: number }) =>
+      deleteReviewByAdmin(params),
+    onSuccess: (_, variables) => {
+      // Invalidate all review-related queries to refresh data
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.lists() });
       queryClient.invalidateQueries({ queryKey: reviewsKeys.byCarId({ carId: variables.carId }) });
       queryClient.invalidateQueries({ queryKey: reviewsKeys.reviewCount({ carId: variables.carId }) });
       queryClient.invalidateQueries({ queryKey: reviewsKeys.averageRating({ carId: variables.carId }) });

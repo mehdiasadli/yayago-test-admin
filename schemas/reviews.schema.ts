@@ -57,6 +57,19 @@ export const GetAverageRatingParamSchema = z.object({
 });
 export const GetAverageRatingResponseSchema = z.number();
 
+// GET ALL REVIEWS (ADMIN) - with optional filters
+export const GetAllReviewsQuerySchema = z.object({
+  carId: z.number().optional(),
+  userId: z.number().optional(),
+});
+export const GetAllReviewsResponseSchema = ReviewSchema.array();
+
+// DELETE REVIEW BY ADMIN
+export const DeleteReviewByAdminParamSchema = z.object({
+  reviewId: idSchema('Review ID'),
+});
+export const DeleteReviewByAdminResponseSchema = z.void();
+
 // === TYPES ===
 
 export type ReviewSchemaType = z.infer<typeof ReviewSchema>;
@@ -82,3 +95,9 @@ export type GetReviewCountResponseSchemaType = z.infer<typeof GetReviewCountResp
 
 export type GetAverageRatingParamSchemaType = z.infer<typeof GetAverageRatingParamSchema>;
 export type GetAverageRatingResponseSchemaType = z.infer<typeof GetAverageRatingResponseSchema>;
+
+export type GetAllReviewsQuerySchemaType = z.infer<typeof GetAllReviewsQuerySchema>;
+export type GetAllReviewsResponseSchemaType = z.infer<typeof GetAllReviewsResponseSchema>;
+
+export type DeleteReviewByAdminParamSchemaType = z.infer<typeof DeleteReviewByAdminParamSchema>;
+export type DeleteReviewByAdminResponseSchemaType = z.infer<typeof DeleteReviewByAdminResponseSchema>;

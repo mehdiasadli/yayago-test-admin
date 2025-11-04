@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ReviewSchemaType } from '@/schemas/reviews.schema';
 import { format } from 'date-fns';
 import { EllipsisVerticalIcon, Star, Trash2, Car } from 'lucide-react';
-import { useDeleteReviewMutation } from '@/features/reviews/reviews.mutations';
+import { useDeleteReviewByAdminMutation } from '@/features/reviews/reviews.mutations';
 import { toast } from 'sonner';
 import Link from 'next/link';
 
@@ -22,7 +22,7 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ review, showActions = true, variant = 'user' }: ReviewCardProps) {
-  const deleteReviewMutation = useDeleteReviewMutation();
+  const deleteReviewMutation = useDeleteReviewByAdminMutation();
 
   const handleDeleteReview = async () => {
     try {
@@ -72,7 +72,7 @@ export function ReviewCard({ review, showActions = true, variant = 'user' }: Rev
         <div className='flex items-start justify-between gap-2'>
           {variant === 'user' ? (
             // Show user information (for vehicle details page)
-            <div className='flex items-center gap-3'>
+            <Link href={`/users/${review.userId}`} className='flex items-center gap-3'>
               <Avatar className='h-10 w-10'>
                 <AvatarFallback className='bg-primary/10 text-primary font-semibold'>
                   {getInitials(review.userFullName)}
@@ -87,7 +87,7 @@ export function ReviewCard({ review, showActions = true, variant = 'user' }: Rev
                 </div>
                 <div className='flex items-center gap-2'>{renderStars(review.rating)}</div>
               </div>
-            </div>
+            </Link>
           ) : (
             // Show vehicle information (for user details page)
             <Link

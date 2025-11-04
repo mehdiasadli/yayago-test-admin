@@ -5,7 +5,7 @@ import { MessageSquare, Star } from 'lucide-react';
 import { ReviewCard } from '@/components/reviews/review-card';
 import { UserDetailsReviewsSectionNotFound } from './user-details-reviews-section-not-found';
 import { UserDetailsReviewsSectionLoading } from './user-details-reviews-section-loading';
-import { createGetMyReviewsQueryOptions } from '@/features/reviews/reviews.queries';
+import { createGetAllReviewsQueryOptions } from '@/features/reviews/reviews.queries';
 import { useQuery } from '@tanstack/react-query';
 
 interface UserDetailsReviewsSectionProps {
@@ -13,9 +13,8 @@ interface UserDetailsReviewsSectionProps {
 }
 
 export default function UserDetailsReviewsSection({ userId }: UserDetailsReviewsSectionProps) {
-  // Note: Currently using getMyReviews which gets reviews for the logged-in user
-  // In a real scenario, you might need an API endpoint to get reviews by a specific userId
-  const { data: reviews, isLoading } = useQuery(createGetMyReviewsQueryOptions());
+  // Fetch reviews for the specific user using the admin endpoint with userId filter
+  const { data: reviews, isLoading } = useQuery(createGetAllReviewsQueryOptions({ userId }));
 
   // Calculate average rating from reviews
   const averageRating =

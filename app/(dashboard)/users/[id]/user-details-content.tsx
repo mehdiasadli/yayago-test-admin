@@ -8,6 +8,7 @@ import { UserDetailsBookingsSection } from './user-details-components/user-detai
 import { UserDetailsHeader } from './user-details-components/user-details-header';
 import { UserDetailsLoading } from './user-details-components/user-details-loading';
 import { UserDetailsNotFound } from './user-details-components/user-details-not-found';
+import UserDetailsReviewsSection from './user-details-components/user-details-reviews-section';
 
 interface UserDetailsContentProps {
   userId: number;
@@ -39,6 +40,9 @@ export function UserDetailsContent({ userId }: UserDetailsContentProps) {
 
       {/* User Bookings Section */}
       <UserDetailsBookingsSection userId={userId} />
+
+      {/* User Reviews Section */}
+      <UserDetailsReviewsSection userId={userId} />
     </div>
   );
 }

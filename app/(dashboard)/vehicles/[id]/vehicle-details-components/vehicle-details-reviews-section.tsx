@@ -61,7 +61,7 @@ export default function VehicleDetailsReviewsSection({ carId, averageRating }: V
         ) : reviews && reviews.length > 0 ? (
           <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
             {reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} showActions={false} />
+              <ReviewCard key={review.id} review={review} showActions={true} />
             ))}
           </div>
         ) : (

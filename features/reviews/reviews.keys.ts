@@ -1,5 +1,6 @@
 import {
   GetAverageRatingParamSchemaType,
+  GetAllReviewsQuerySchemaType,
   GetReviewCountParamSchemaType,
   GetReviewsByCarIdParamSchemaType,
   UpdateReviewParamSchemaType,
@@ -10,6 +11,7 @@ export const reviewsKeys = {
   lists: () => [...reviewsKeys.all, 'list'] as const,
   myReviews: () => [...reviewsKeys.lists(), 'my-reviews'] as const,
   byCarId: (params: GetReviewsByCarIdParamSchemaType) => [...reviewsKeys.lists(), 'by-car', params] as const,
+  allReviews: (query?: GetAllReviewsQuerySchemaType) => [...reviewsKeys.lists(), 'all', query] as const,
   details: () => [...reviewsKeys.all, 'detail'] as const,
   detail: (params: UpdateReviewParamSchemaType) => [...reviewsKeys.details(), params] as const,
   reviewCount: (params: GetReviewCountParamSchemaType) => [...reviewsKeys.byCarId(params), 'count'] as const,

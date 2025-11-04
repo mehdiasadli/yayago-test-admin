@@ -1,7 +1,8 @@
 import { queryOptions } from '@tanstack/react-query';
-import { getAverageRating, getMyReviews, getReviewCount, getReviewsByCarId } from './reviews.api';
+import { getAllReviews, getAverageRating, getMyReviews, getReviewCount, getReviewsByCarId } from './reviews.api';
 import { reviewsKeys } from './reviews.keys';
 import {
+  GetAllReviewsQuerySchemaType,
   GetAverageRatingParamSchemaType,
   GetReviewCountParamSchemaType,
   GetReviewsByCarIdParamSchemaType,
@@ -36,5 +37,13 @@ export function createGetAverageRatingQueryOptions(params: GetAverageRatingParam
   return queryOptions({
     queryKey: reviewsKeys.averageRating(params),
     queryFn: () => getAverageRating(params),
+  });
+}
+
+// GET ALL REVIEWS (ADMIN) - with optional filters
+export function createGetAllReviewsQueryOptions(query?: GetAllReviewsQuerySchemaType) {
+  return queryOptions({
+    queryKey: reviewsKeys.allReviews(query),
+    queryFn: () => getAllReviews(query),
   });
 }

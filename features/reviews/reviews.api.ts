@@ -20,6 +20,11 @@ import {
   UpdateReviewRequestSchemaType,
   UpdateReviewResponseSchema,
   UpdateReviewResponseSchemaType,
+  GetAllReviewsQuerySchemaType,
+  GetAllReviewsResponseSchema,
+  GetAllReviewsResponseSchemaType,
+  DeleteReviewByAdminParamSchemaType,
+  DeleteReviewByAdminResponseSchemaType,
 } from '@/schemas/reviews.schema';
 import { z } from 'zod';
 
@@ -196,6 +201,59 @@ export async function getAverageRating(
     if (error instanceof z.ZodError) {
       throw new Error(error.issues[0].message);
     }
+    throw error;
+  }
+}
+
+// GET ALL REVIEWS (ADMIN) - with optional filters
+export async function getAllReviews(query?: GetAllReviewsQuerySchemaType): Promise<GetAllReviewsResponseSchemaType> {
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/users/reviews`);
+
+  if (query) {
+    if (query.carId !== undefined) {
+      url.searchParams.append('carId', String(query.carId));
+    }
+    if (query.userId !== undefined) {
+      url.searchParams.append('userId', String(query.userId));
+    }
+  }
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'GET',
+      headers: await getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch all reviews');
+    }
+
+    const data = await response.json();
+    return GetAllReviewsResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(error.issues[0].message);
+    }
+    throw error;
+  }
+}
+
+// DELETE REVIEW BY ADMIN
+export async function deleteReviewByAdmin(
+  params: DeleteReviewByAdminParamSchemaType
+): Promise<DeleteReviewByAdminResponseSchemaType> {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/users/reviews/${params.reviewId}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: await getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete review');
+    }
+  } catch (error) {
     throw error;
   }
 }
