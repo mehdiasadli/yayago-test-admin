@@ -7,7 +7,7 @@ import {
   RefreshTokenResponseSchema,
 } from './schemas/auth.schema';
 
-interface AuthUser {
+export interface AuthUser {
   id: string;
   name: string;
   email: string;
