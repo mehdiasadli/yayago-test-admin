@@ -11,7 +11,6 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BookingCard } from '@/components/bookings/booking-card';
-import { ReviewCard } from '@/components/reviews/review-card';
 import {
   Calendar,
   Car,
@@ -24,8 +23,6 @@ import {
   Settings,
   TrendingUp,
   ShoppingBag,
-  Star,
-  MessageSquare,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -37,6 +34,7 @@ import { ApproveVehicleDialog } from '@/components/vehicles/approve-vehicle-dial
 import { RejectVehicleDialog } from '@/components/vehicles/reject-vehicle-dialog';
 import { UpdateVehicleStatusDialog } from '@/components/vehicles/update-vehicle-status-dialog';
 import { UpdateVehiclePriceDialog } from '@/components/vehicles/update-vehicle-price-dialog';
+import VehicleDetailsReviewsSection from './vehicle-details-components/vehicle-details-reviews-section';
 
 interface VehicleDetailsContentProps {
   carId: number;
@@ -497,71 +495,7 @@ export function VehicleDetailsContent({ carId }: VehicleDetailsContentProps) {
       </Card>
 
       {/* Vehicle Reviews Section */}
-      <Card>
-        <CardHeader>
-          <div className='flex items-center justify-between'>
-            <div>
-              <CardTitle className='flex items-center gap-2'>
-                <MessageSquare className='h-5 w-5' />
-                Customer Reviews
-              </CardTitle>
-              <CardDescription>
-                {reviews && reviews.length > 0 ? (
-                  <div className='flex items-center gap-4 mt-2'>
-                    <div className='flex items-center gap-2'>
-                      <div className='flex items-center gap-1'>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                          <Star
-                            key={index}
-                            className={`h-4 w-4 ${
-                              vehicle?.averageRating && index < Math.round(vehicle.averageRating)
-                                ? 'fill-yellow-400 text-yellow-400'
-                                : 'fill-muted text-muted-foreground'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      {vehicle?.averageRating && (
-                        <span className='text-sm font-semibold text-foreground'>
-                          {vehicle.averageRating.toFixed(1)}
-                        </span>
-                      )}
-                    </div>
-                    <span className='text-sm text-muted-foreground'>
-                      Based on {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
-                    </span>
-                  </div>
-                ) : (
-                  'Customer feedback and ratings'
-                )}
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {isLoadingReviews ? (
-            <div className='space-y-4'>
-              <Skeleton className='h-32' />
-              <Skeleton className='h-32' />
-              <Skeleton className='h-32' />
-            </div>
-          ) : reviews && reviews.length > 0 ? (
-            <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
-              {reviews.map((review) => (
-                <ReviewCard key={review.id} review={review} showActions={false} />
-              ))}
-            </div>
-          ) : (
-            <div className='text-center py-8'>
-              <MessageSquare className='h-12 w-12 text-muted-foreground mx-auto mb-4' />
-              <p className='text-sm text-muted-foreground'>No reviews yet for this vehicle</p>
-              <p className='text-xs text-muted-foreground mt-1'>
-                Reviews will appear here once customers start rating this vehicle
-              </p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      <VehicleDetailsReviewsSection reviews={reviews} vehicle={vehicle} isLoading={isLoadingReviews} />
     </div>
   );
 }
