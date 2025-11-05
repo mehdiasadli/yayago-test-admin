@@ -10,7 +10,6 @@ export const UserSchema = z.object({
   email: z.string(),
   fullName: z.string(),
   phoneNumber: z.string(),
-  role: UserRoleEnum,
   active: z.boolean(),
   createdAt: z.coerce.date(),
   lastLoginAt: z.coerce.date().nullable(),

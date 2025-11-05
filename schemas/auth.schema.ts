@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { UserSchema } from './users.schema';
+import { UserRoleEnum, UserSchema } from './users.schema';
 
 export const LoginSchema = z.object({
   email: z
@@ -21,7 +21,7 @@ export const LoginResponseSchema = z.object({
   token: z.string(),
   refreshToken: z.string(),
   userId: z.number().positive(),
-  role: z.string(),
+  role: UserRoleEnum,
 });
 
 export const LoginUserResponseSchema = UserSchema;
