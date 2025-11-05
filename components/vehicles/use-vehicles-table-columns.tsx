@@ -59,19 +59,19 @@ export function useVehiclesTableColumns() {
         },
         size: 120,
       },
-      {
-        accessorKey: 'available',
-        header: 'Availability',
-        meta: {
-          skeleton: <Skeleton className='h-10 w-full' />,
-        },
-        cell: ({ row }) => (
-          <Badge variant={row.original.available ? 'success' : 'destructive'} className='text-white'>
-            {row.original.available ? 'Available' : 'Unavailable'}
-          </Badge>
-        ),
-        size: 100,
-      },
+      // {
+      //   accessorKey: 'available',
+      //   header: 'Availability',
+      //   meta: {
+      //     skeleton: <Skeleton className='h-10 w-full' />,
+      //   },
+      //   cell: ({ row }) => (
+      //     <Badge variant={row.original.available ? 'success' : 'destructive'} className='text-white'>
+      //       {row.original.available ? 'Available' : 'Unavailable'}
+      //     </Badge>
+      //   ),
+      //   size: 100,
+      // },
       {
         accessorKey: 'fuelType',
         header: 'Details',
@@ -134,7 +134,7 @@ export function useVehiclesTableColumns() {
       {
         accessorKey: 'createdAt',
         header: 'Created At',
-        cell: ({ row }) => <span>{format(new Date(row.original.createdAt), 'dd.MM.yyyy')}</span>,
+        cell: ({ row }) => <span>{format(new Date(row.original.createdAt), 'dd.MM.yyyy, HH:mm')}</span>,
         size: 120,
         meta: {
           skeleton: <Skeleton className='h-10 w-full' />,
@@ -143,7 +143,7 @@ export function useVehiclesTableColumns() {
       {
         accessorKey: 'actions',
         header: '',
-        size: 40,
+        size: 55,
         meta: {
           skeleton: <Skeleton className='h-10 w-full' />,
         },

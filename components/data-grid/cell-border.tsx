@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DataGrid as TanstackDataGrid, DataGridContainer } from '@/components/ui/data-grid';
 import { DataGridPagination } from '@/components/ui/data-grid-pagination';
 import { DataGridTable } from '@/components/ui/data-grid-table';
@@ -9,13 +8,10 @@ import {
   ColumnOrderState,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
-  PaginationState,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { parseAsIndex, useQueryState } from 'nuqs';
 
 interface DataGridProps<TData extends { id: string | number }> {
   data: TData[];
