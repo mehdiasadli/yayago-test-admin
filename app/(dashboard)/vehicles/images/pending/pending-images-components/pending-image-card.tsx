@@ -86,11 +86,23 @@ export function PendingImageCard({ image }: PendingImageCardProps) {
         </CardDescription>
       </CardContent>
       <CardFooter className='p-4 pt-0 flex gap-2'>
-        <Button size='sm' variant='default' className='flex-1' onClick={handleApprove} disabled={isPending}>
+        <Button
+          size='sm'
+          variant='outline'
+          className='flex-1 text-green-400 hover:text-green-500 hover:bg-green-50'
+          onClick={handleApprove}
+          disabled={isPending}
+        >
           <Check className='h-4 w-4 mr-1' />
           Approve
         </Button>
-        <Button size='sm' variant='destructive' className='flex-1' onClick={handleReject} disabled={isPending}>
+        <Button
+          size='sm'
+          variant='outline'
+          className='flex-1 text-red-400 hover:text-red-500 hover:bg-red-50'
+          onClick={handleReject}
+          disabled={isPending}
+        >
           <X className='h-4 w-4 mr-1' />
           Reject
         </Button>

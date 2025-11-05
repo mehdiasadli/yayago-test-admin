@@ -41,12 +41,9 @@ export function PendingImagesContent() {
       <PendingImageHeader totalImages={pendingImages.length} />
 
       <div className='space-y-6'>
-        {sortedCarIds.map((carId) => {
-          const images = groupedImages[carId];
-          const primaryImage = images.find((img) => img.isPrimary);
-
-          return <PendingImageCarContainer key={carId} carId={carId} images={images} primaryImage={primaryImage} />;
-        })}
+        {sortedCarIds.map((carId) => (
+          <PendingImageCarContainer key={carId} carId={carId} images={groupedImages[carId]} />
+        ))}
       </div>
     </div>
   );
