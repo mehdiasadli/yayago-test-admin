@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { VehicleSchemaType } from '@/schemas/vehicles.schema';
-import { CheckCircle2, DollarSign, XCircle } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 
 interface VehicleDetailsHeaderInfoProps {
   vehicle: VehicleSchemaType;
@@ -25,19 +25,6 @@ export default function VehicleDetailsHeaderInfo({ vehicle }: VehicleDetailsHead
           </h2>
           <Badge variant={getStatusVariant(vehicle.status)} className='text-white'>
             {vehicle.status}
-          </Badge>
-          <Badge variant={vehicle.available ? 'success' : 'destructive'} className='gap-1 text-white'>
-            {vehicle.available ? (
-              <>
-                <CheckCircle2 className='h-3 w-3' />
-                Available
-              </>
-            ) : (
-              <>
-                <XCircle className='h-3 w-3' />
-                Unavailable
-              </>
-            )}
           </Badge>
           {vehicle.featured && (
             <Badge variant='primary' className='text-white'>

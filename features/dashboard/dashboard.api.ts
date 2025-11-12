@@ -2,9 +2,18 @@ import { getAuthHeaders } from '@/lib/auth-utils';
 import {
   GetDashboardStatsResponseSchema,
   GetDashboardStatsResponseSchemaType,
-  GetRevenueStatsQuerySchemaType,
-  GetRevenueStatsResponseSchema,
-  GetRevenueStatsResponseSchemaType,
+  GetRevenueReportQuerySchemaType,
+  GetRevenueReportResponseSchema,
+  GetRevenueReportResponseSchemaType,
+  GetBookingAnalyticsQuerySchemaType,
+  GetBookingAnalyticsResponseSchema,
+  GetBookingAnalyticsResponseSchemaType,
+  GetUserAnalyticsQuerySchemaType,
+  GetUserAnalyticsResponseSchema,
+  GetUserAnalyticsResponseSchemaType,
+  GetReviewAnalyticsQuerySchemaType,
+  GetReviewAnalyticsResponseSchema,
+  GetReviewAnalyticsResponseSchemaType,
   GetTotalRevenueResponseSchema,
   GetTotalRevenueResponseSchemaType,
   GetMonthlyRevenueResponseSchema,
@@ -40,13 +49,18 @@ export async function getDashboardStats(): Promise<GetDashboardStatsResponseSche
   }
 }
 
-// GET REVENUE STATS (with date range)
-export async function getRevenueStats(
-  params: GetRevenueStatsQuerySchemaType
-): Promise<GetRevenueStatsResponseSchemaType> {
+// GET REVENUE REPORT
+export async function getRevenueReport(
+  params?: GetRevenueReportQuerySchemaType
+): Promise<GetRevenueReportResponseSchemaType> {
   const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard/revenue`);
-  url.searchParams.append('startDate', params.startDate);
-  url.searchParams.append('endDate', params.endDate);
+
+  if (params) {
+    if (params.period) url.searchParams.append('period', params.period);
+    if (params.from) url.searchParams.append('from', params.from);
+    if (params.to) url.searchParams.append('to', params.to);
+    if (params.groupBy) url.searchParams.append('groupBy', params.groupBy);
+  }
 
   try {
     const response = await fetch(url.toString(), {
@@ -55,11 +69,107 @@ export async function getRevenueStats(
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch revenue stats');
+      throw new Error('Failed to fetch revenue report');
     }
 
     const data = await response.json();
-    return GetRevenueStatsResponseSchema.parse(data);
+    return GetRevenueReportResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(error.issues[0].message);
+    }
+    throw error;
+  }
+}
+
+// GET BOOKING ANALYTICS
+export async function getBookingAnalytics(
+  params?: GetBookingAnalyticsQuerySchemaType
+): Promise<GetBookingAnalyticsResponseSchemaType> {
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard/bookings`);
+
+  if (params) {
+    if (params.period) url.searchParams.append('period', params.period);
+    if (params.from) url.searchParams.append('from', params.from);
+    if (params.to) url.searchParams.append('to', params.to);
+  }
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'GET',
+      headers: await getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch booking analytics');
+    }
+
+    const data = await response.json();
+    return GetBookingAnalyticsResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(error.issues[0].message);
+    }
+    throw error;
+  }
+}
+
+// GET USER ANALYTICS
+export async function getUserAnalytics(
+  params?: GetUserAnalyticsQuerySchemaType
+): Promise<GetUserAnalyticsResponseSchemaType> {
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard/users`);
+
+  if (params) {
+    if (params.period) url.searchParams.append('period', params.period);
+    if (params.from) url.searchParams.append('from', params.from);
+    if (params.to) url.searchParams.append('to', params.to);
+  }
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'GET',
+      headers: await getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user analytics');
+    }
+
+    const data = await response.json();
+    return GetUserAnalyticsResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(error.issues[0].message);
+    }
+    throw error;
+  }
+}
+
+// GET REVIEW ANALYTICS
+export async function getReviewAnalytics(
+  params?: GetReviewAnalyticsQuerySchemaType
+): Promise<GetReviewAnalyticsResponseSchemaType> {
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard/reviews`);
+
+  if (params) {
+    if (params.period) url.searchParams.append('period', params.period);
+    if (params.from) url.searchParams.append('from', params.from);
+    if (params.to) url.searchParams.append('to', params.to);
+  }
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'GET',
+      headers: await getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch review analytics');
+    }
+
+    const data = await response.json();
+    return GetReviewAnalyticsResponseSchema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
       throw new Error(error.issues[0].message);

@@ -14,19 +14,20 @@ import {
 import { Power } from 'lucide-react';
 import { useUpdateVehicleStatusMutation } from '@/features/vehicles/vehicles.mutations';
 import { toast } from 'sonner';
-import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CarStatusEnumType } from '@/schemas/vehicles.schema';
 
 interface UpdateVehicleStatusDialogProps {
   carId: number;
-  currentStatus: boolean;
+  currentStatus: string;
   vehicleName: string;
 }
 
 export function UpdateVehicleStatusDialog({ carId, currentStatus, vehicleName }: UpdateVehicleStatusDialogProps) {
   const [open, setOpen] = useState(false);
-  const [available, setAvailable] = useState(currentStatus);
+  const [status, setStatus] = useState<CarStatusEnumType>(currentStatus as CarStatusEnumType);
   const [reason, setReason] = useState('');
 
   const updateStatusMutation = useUpdateVehicleStatusMutation();
@@ -35,7 +36,7 @@ export function UpdateVehicleStatusDialog({ carId, currentStatus, vehicleName }:
     updateStatusMutation.mutate(
       {
         params: { carId },
-        body: { available, reason: reason || undefined },
+        body: { status, reason: reason || undefined },
       },
       {
         onSuccess: () => {
@@ -59,21 +60,33 @@ export function UpdateVehicleStatusDialog({ carId, currentStatus, vehicleName }:
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Vehicle Availability</DialogTitle>
+          <DialogTitle>Update Vehicle Status</DialogTitle>
           <DialogDescription>
-            Change the availability status for <strong>{vehicleName}</strong>
+            Change the status for <strong>{vehicleName}</strong>
           </DialogDescription>
         </DialogHeader>
 
         <div className='space-y-4 py-4'>
-          <div className='flex items-center justify-between rounded-lg border p-4'>
-            <div className='space-y-0.5'>
-              <Label htmlFor='available'>Available for Rent</Label>
-              <p className='text-sm text-muted-foreground'>
-                {available ? 'Vehicle can be booked by customers' : 'Vehicle is not available for booking'}
-              </p>
-            </div>
-            <Switch id='available' checked={available} onCheckedChange={setAvailable} />
+          <div className='space-y-2'>
+            <Label htmlFor='status'>Status</Label>
+            <Select value={status} onValueChange={(value) => setStatus(value as CarStatusEnumType)}>
+              <SelectTrigger id='status'>
+                <SelectValue placeholder='Select status' />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value='PENDING'>Pending</SelectItem>
+                <SelectItem value='APPROVED'>Approved</SelectItem>
+                <SelectItem value='AVAILABLE'>Available</SelectItem>
+                <SelectItem value='OCCUPIED'>Occupied</SelectItem>
+                <SelectItem value='REJECTED'>Rejected</SelectItem>
+                <SelectItem value='BLOCKED'>Blocked</SelectItem>
+                <SelectItem value='INACTIVE'>Inactive</SelectItem>
+                <SelectItem value='DISABLED'>Disabled</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className='text-xs text-muted-foreground'>
+              Current status: <strong>{currentStatus}</strong>
+            </p>
           </div>
 
           <div className='space-y-2'>
@@ -93,7 +106,7 @@ export function UpdateVehicleStatusDialog({ carId, currentStatus, vehicleName }:
           <Button variant='outline' onClick={() => setOpen(false)} disabled={updateStatusMutation.isPending}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={updateStatusMutation.isPending || available === currentStatus}>
+          <Button onClick={handleSubmit} disabled={updateStatusMutation.isPending || status === currentStatus}>
             {updateStatusMutation.isPending ? 'Updating...' : 'Update Status'}
           </Button>
         </DialogFooter>

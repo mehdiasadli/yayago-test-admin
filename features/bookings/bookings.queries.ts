@@ -1,7 +1,11 @@
 import { queryOptions } from '@tanstack/react-query';
-import { getBookingById, getBookingsByUserId } from './bookings.api';
+import { getBookingById, getBookingsByUserId, searchAdminBookings } from './bookings.api';
 import { bookingsKeys } from './bookings.keys';
-import { GetBookingByIdParamSchemaType, GetBookingsByUserIdParamSchemaType } from '@/schemas/bookings.schema';
+import {
+  GetBookingByIdParamSchemaType,
+  GetBookingsByUserIdParamSchemaType,
+  SearchAdminBookingsQuerySchemaType,
+} from '@/schemas/bookings.schema';
 
 // GET BOOKING BY ID
 export function createGetBookingByIdQueryOptions(params: GetBookingByIdParamSchemaType) {
@@ -16,5 +20,13 @@ export function createGetBookingsByUserIdQueryOptions(params: GetBookingsByUserI
   return queryOptions({
     queryKey: bookingsKeys.byUserId(params),
     queryFn: () => getBookingsByUserId(params),
+  });
+}
+
+// SEARCH ADMIN BOOKINGS
+export function createSearchAdminBookingsQueryOptions(params?: SearchAdminBookingsQuerySchemaType) {
+  return queryOptions({
+    queryKey: bookingsKeys.adminList(params),
+    queryFn: () => searchAdminBookings(params),
   });
 }

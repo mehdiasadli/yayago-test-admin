@@ -40,4 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# backend communication
 swagger.json
+BACKEND_REQUIREMENTS.md

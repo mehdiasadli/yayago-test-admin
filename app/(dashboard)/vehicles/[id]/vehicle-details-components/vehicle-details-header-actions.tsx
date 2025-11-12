@@ -23,15 +23,10 @@ export default function VehicleDetailsHeaderActions({ vehicle }: VehicleDetailsH
     <div className='flex items-center gap-2'>
       <UpdateVehicleStatusDialog
         carId={vehicle.id}
-        currentStatus={vehicle.available}
+        currentStatus={vehicle.status}
         vehicleName={`${vehicle.brand} ${vehicle.model}`}
       />
-      <UpdateVehiclePriceDialog
-        carId={vehicle.id}
-        currentPrice={vehicle.pricePerDay}
-        currency={vehicle.currency}
-        vehicleName={`${vehicle.brand} ${vehicle.model}`}
-      />
+      <UpdateVehiclePriceDialog vehicle={vehicle} vehicleName={`${vehicle.brand} ${vehicle.model}`} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' size='icon'>

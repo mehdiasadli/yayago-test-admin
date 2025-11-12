@@ -1,11 +1,7 @@
 import { PageHeader } from '@/components/page-header';
 import { EditVehiclePageContent } from './edit-vehicle-page-content';
 
-interface EditVehiclePageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
+interface EditVehiclePageProps extends PageProps<'/vehicles/[id]/edit'> {}
 
 export default async function EditVehiclePage({ params }: EditVehiclePageProps) {
   const { id } = await params;

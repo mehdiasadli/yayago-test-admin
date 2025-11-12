@@ -4,9 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-interface UserPageProps {
-  params: Promise<{ id: string }>;
-}
+interface UserPageProps extends PageProps<'/users/[id]'> {}
 
 export default async function UserPage({ params }: UserPageProps) {
   const { id } = await params;

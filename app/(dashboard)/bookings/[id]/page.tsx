@@ -1,13 +1,10 @@
-import { NotImplemented } from '@/components/not-implemented';
 import { PageHeader } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { BookingDetailsContent } from './booking-details-content';
 
-interface BookingDetailsPageProps {
-  params: Promise<{ id: string }>;
-}
+interface BookingDetailsPageProps extends PageProps<'/bookings/[id]'> {}
 
 export default async function BookingDetailsPage({ params }: BookingDetailsPageProps) {
   const { id } = await params;

@@ -13,6 +13,12 @@ import {
   SetBookingStatusQuerySchemaType,
   SetBookingStatusResponseSchema,
   SetBookingStatusResponseSchemaType,
+  SearchAdminBookingsQuerySchemaType,
+  SearchAdminBookingsResponseSchema,
+  SearchAdminBookingsResponseSchemaType,
+  BulkUpdateBookingStatusRequestSchemaType,
+  BulkUpdateBookingStatusResponseSchema,
+  BulkUpdateBookingStatusResponseSchemaType,
 } from '@/schemas/bookings.schema';
 import { z } from 'zod';
 
@@ -114,6 +120,72 @@ export async function updateBookingStatus(
 
     const data = await response.json();
     return SetBookingStatusResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(error.issues[0].message);
+    }
+    throw error;
+  }
+}
+
+// ADMIN BOOKING MANAGEMENT
+
+// SEARCH ADMIN BOOKINGS
+export async function searchAdminBookings(
+  params?: SearchAdminBookingsQuerySchemaType
+): Promise<SearchAdminBookingsResponseSchemaType> {
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/bookings`);
+
+  if (params) {
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        url.searchParams.append(key, String(value));
+      }
+    });
+  }
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'GET',
+      headers: await getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to search admin bookings');
+    }
+
+    const data = await response.json();
+    return SearchAdminBookingsResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(error.issues[0].message);
+    }
+    throw error;
+  }
+}
+
+// BULK UPDATE BOOKING STATUS
+export async function bulkUpdateBookingStatus(
+  body: BulkUpdateBookingStatusRequestSchemaType
+): Promise<BulkUpdateBookingStatusResponseSchemaType> {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/bookings/bulk-status`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(await getAuthHeaders()),
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to bulk update booking status');
+    }
+
+    const data = await response.json();
+    return BulkUpdateBookingStatusResponseSchema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
       throw new Error(error.issues[0].message);

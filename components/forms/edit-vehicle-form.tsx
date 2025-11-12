@@ -99,7 +99,7 @@ export function EditVehicleForm({ vehicle, className, ...props }: EditVehicleFor
       year: vehicle.year,
       pricePerDay: vehicle.pricePerDay,
       currency: vehicle.currency as 'AED' | 'USD' | 'AZN' | 'EUR' | 'RUB' | 'GBP',
-      available: vehicle.available,
+      available: vehicle.status === 'AVAILABLE',
       fuelType: (vehicle.fuelType as 'PETROL' | 'DIESEL' | 'HYBRID' | 'PLUG_IN_HYBRID' | 'ELECTRIC') || undefined,
       doorCount: vehicle.doorCount || undefined,
       seatCount: vehicle.seatCount || undefined,

@@ -42,12 +42,14 @@ import {
   UpdateVehicleParamSchemaType,
   UpdateVehiclePriceParamSchemaType,
   UpdateVehiclePriceRequestSchemaType,
+  UpdateVehiclePriceResponseSchema,
   UpdateVehiclePriceResponseSchemaType,
   UpdateVehicleRequestSchemaType,
   UpdateVehicleResponseSchema,
   UpdateVehicleResponseSchemaType,
   UpdateVehicleStatusParamSchemaType,
   UpdateVehicleStatusRequestSchemaType,
+  UpdateVehicleStatusResponseSchema,
   UpdateVehicleStatusResponseSchemaType,
 } from '@/schemas/vehicles.schema';
 import { z } from 'zod';
@@ -205,6 +207,9 @@ export async function updateVehicleStatus(
     if (!response.ok) {
       throw new Error('Failed to update vehicle status');
     }
+
+    const data = await response.json();
+    return UpdateVehicleStatusResponseSchema.parse(data);
   } catch (error) {
     throw error;
   }
@@ -230,6 +235,9 @@ export async function updateVehiclePrice(
     if (!response.ok) {
       throw new Error('Failed to update vehicle price');
     }
+
+    const data = await response.json();
+    return UpdateVehiclePriceResponseSchema.parse(data);
   } catch (error) {
     throw error;
   }

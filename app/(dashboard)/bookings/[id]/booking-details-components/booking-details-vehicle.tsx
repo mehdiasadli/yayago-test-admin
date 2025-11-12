@@ -75,9 +75,6 @@ export default function BookingDetailsVehicle({ booking, vehicle, isLoading }: B
                   <p className='text-sm text-muted-foreground'>Year: {vehicle.year}</p>
                 </div>
                 <div className='flex items-center gap-2 flex-wrap'>
-                  <Badge variant={vehicle.available ? 'success' : 'secondary'} className='text-white'>
-                    {vehicle.available ? 'Available' : 'Unavailable'}
-                  </Badge>
                   {vehicle.featured && (
                     <Badge variant='primary' className='text-white'>
                       Featured

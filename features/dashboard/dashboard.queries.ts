@@ -1,14 +1,22 @@
 import { queryOptions } from '@tanstack/react-query';
 import {
   getDashboardStats,
-  getRevenueStats,
+  getRevenueReport,
+  getBookingAnalytics,
+  getUserAnalytics,
+  getReviewAnalytics,
   getTotalRevenue,
   getMonthlyRevenue,
   getDailyRevenue,
   getOccupancyRate,
 } from './dashboard.api';
 import { dashboardKeys } from './dashboard.keys';
-import { GetRevenueStatsQuerySchemaType } from '@/schemas/dashboard.schema';
+import {
+  GetRevenueReportQuerySchemaType,
+  GetBookingAnalyticsQuerySchemaType,
+  GetUserAnalyticsQuerySchemaType,
+  GetReviewAnalyticsQuerySchemaType,
+} from '@/schemas/dashboard.schema';
 
 // GET DASHBOARD STATS
 export function createGetDashboardStatsQueryOptions() {
@@ -18,11 +26,35 @@ export function createGetDashboardStatsQueryOptions() {
   });
 }
 
-// GET REVENUE STATS
-export function createGetRevenueStatsQueryOptions(params: GetRevenueStatsQuerySchemaType) {
+// GET REVENUE REPORT
+export function createGetRevenueReportQueryOptions(params?: GetRevenueReportQuerySchemaType) {
   return queryOptions({
-    queryKey: dashboardKeys.revenueStats(params),
-    queryFn: () => getRevenueStats(params),
+    queryKey: dashboardKeys.revenueReport(params),
+    queryFn: () => getRevenueReport(params),
+  });
+}
+
+// GET BOOKING ANALYTICS
+export function createGetBookingAnalyticsQueryOptions(params?: GetBookingAnalyticsQuerySchemaType) {
+  return queryOptions({
+    queryKey: dashboardKeys.bookingAnalytics(params),
+    queryFn: () => getBookingAnalytics(params),
+  });
+}
+
+// GET USER ANALYTICS
+export function createGetUserAnalyticsQueryOptions(params?: GetUserAnalyticsQuerySchemaType) {
+  return queryOptions({
+    queryKey: dashboardKeys.userAnalytics(params),
+    queryFn: () => getUserAnalytics(params),
+  });
+}
+
+// GET REVIEW ANALYTICS
+export function createGetReviewAnalyticsQueryOptions(params?: GetReviewAnalyticsQuerySchemaType) {
+  return queryOptions({
+    queryKey: dashboardKeys.reviewAnalytics(params),
+    queryFn: () => getReviewAnalytics(params),
   });
 }
 

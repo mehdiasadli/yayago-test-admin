@@ -9,8 +9,9 @@ interface BookingDetailsInfoProps {
 }
 
 export default function BookingDetailsInfo({ booking }: BookingDetailsInfoProps) {
-  const formatTime = (time: { hour: number; minute: number } | null) => {
+  const formatTime = (time: string | { hour: number; minute: number } | null) => {
     if (!time) return 'N/A';
+    if (typeof time === 'string') return time;
     return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
   };
 

@@ -1,50 +1,46 @@
+import { parseAsBoolean, useQueryState } from 'nuqs';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { VehiclesTableQuery } from './use-vehicles-queries';
+import { VehicleFiltersDialog } from './vehicle-filters-dialog';
+import { Button } from '../ui/button';
+import { FilterIcon } from 'lucide-react';
 
-export function VehiclesTableFilters({
-  query,
-  setQuery,
-}: {
+interface VehiclesTableFiltersProps {
   query: VehiclesTableQuery[0];
   setQuery: VehiclesTableQuery[1];
-}) {
+}
+
+export function VehiclesTableFilters({ query, setQuery }: VehiclesTableFiltersProps) {
+  const [filtersOpen, setFiltersOpen] = useQueryState('filters-open', parseAsBoolean.withDefault(false));
+
   return (
     <div className='flex justify-between items-center gap-4'>
-      <div className='flex items-center gap-2 flex-1'>
-        <Input
-          placeholder='Search by brand, model...'
-          value={query.searchTerm ?? ''}
-          onChange={(e) => setQuery({ ...query, searchTerm: e.target.value })}
-          className='max-w-sm'
-        />
-        <Input
+      <Input
+        placeholder='Search by brand, model...'
+        value={query.searchTerm ?? ''}
+        onChange={(e) => setQuery({ searchTerm: e.target.value })}
+        className='max-w-sm'
+      />
+      {/* <Input
           placeholder='Brand'
           value={query.brand ?? ''}
-          onChange={(e) => setQuery({ ...query, brand: e.target.value })}
+          onChange={(e) => setQuery({ brand: e.target.value })}
           className='max-w-xs'
         />
         <Input
           placeholder='Model'
           value={query.model ?? ''}
-          onChange={(e) => setQuery({ ...query, model: e.target.value })}
+          onChange={(e) => setQuery({ model: e.target.value })}
           className='max-w-xs'
-        />
-      </div>
-      <div className='flex items-center gap-2'>
-        <Select
-          value={query.available === null || query.available === undefined ? 'all' : query.available ? 'true' : 'false'}
-          onValueChange={(value) => setQuery({ ...query, available: value === 'all' ? undefined : value === 'true' })}
-        >
-          <SelectTrigger className='w-40'>
-            <SelectValue placeholder='Availability' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='all'>All</SelectItem>
-            <SelectItem value='true'>Available</SelectItem>
-            <SelectItem value='false'>Unavailable</SelectItem>
-          </SelectContent>
-        </Select>
+        /> */}
+      <div suppressHydrationWarning>
+        <VehicleFiltersDialog open={filtersOpen} onOpenChange={setFiltersOpen} query={query} setQuery={setQuery}>
+          <Button variant='outline'>
+            <FilterIcon className='size-4' />
+            Filters
+          </Button>
+        </VehicleFiltersDialog>
       </div>
     </div>
   );

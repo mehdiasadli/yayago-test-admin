@@ -1,11 +1,7 @@
 import { PageHeader } from '@/components/page-header';
 import { VehicleImagesUploader } from '@/components/vehicles/vehicle-images-uploader';
 
-interface VehicleImagesPageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
+interface VehicleImagesPageProps extends PageProps<'/vehicles/[id]/edit/images'> {}
 
 export default async function VehicleImagesPage({ params }: VehicleImagesPageProps) {
   const { id } = await params;

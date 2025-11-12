@@ -4,7 +4,7 @@ import ThemeToggle from '@/components/theme-toggle';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { redirect } from 'next/navigation';
 
-export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: LayoutProps<'/'>) {
   const session = await auth();
 
   if (!session) {

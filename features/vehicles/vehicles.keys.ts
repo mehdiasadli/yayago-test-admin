@@ -14,6 +14,7 @@ export const vehiclesKeys = {
   list: (filters?: GetVehiclesQuerySchemaType) => [...vehiclesKeys.lists(), filters] as const,
   details: () => [...vehiclesKeys.all, 'detail'] as const,
   detail: (params: GetVehicleByIdParamSchemaType) => [...vehiclesKeys.details(), params] as const,
+  bookingsLists: () => [...vehiclesKeys.all, 'bookings'] as const,
   bookings: (params: GetVehicleBookingsParamSchemaType) => [...vehiclesKeys.detail(params), 'bookings'] as const,
   bookingsCount: (params: GetVehicleBookingsCountParamSchemaType) =>
     [...vehiclesKeys.detail(params), 'bookings-count'] as const,

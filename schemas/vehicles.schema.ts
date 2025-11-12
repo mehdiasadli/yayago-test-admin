@@ -73,7 +73,7 @@ export const VehicleSchema = z.object({
   year: z.number(),
   pricePerDay: z.number(),
   currency: z.string(),
-  available: z.boolean(),
+  status: CarStatusEnum,
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   totalBookings: z.number(),
@@ -107,7 +107,6 @@ export const VehicleSchema = z.object({
   isFavorited: z.boolean().nullish(),
   reviewCount: z.number(),
   averageRating: z.number().nullish(),
-  status: CarStatusEnum,
   rejectionReason: z.string().nullable().optional(),
   images: ImageSchema.array().optional(),
 });
@@ -120,14 +119,34 @@ export const VehicleParamSchema = z.object({
 export const GetVehiclesQuerySchema = z.object({
   searchTerm: z.string().optional(),
   brand: z.string().optional(),
+  brandLike: z.string().optional(),
   model: z.string().optional(),
-  year: z.number().optional(),
-  minPrice: z.number().optional(),
-  maxPrice: z.number().optional(),
-  available: z.boolean().optional(),
+  year: z.coerce.number().optional(),
+  yearFrom: z.coerce.number().optional(),
+  yearTo: z.coerce.number().optional(),
+  minPrice: z.coerce.number().optional(),
+  maxPrice: z.coerce.number().optional(),
+  status: CarStatusEnum.optional(),
+  carType: z.string().optional(),
+  featured: z.coerce.boolean().optional(),
+  hasImages: z.coerce.boolean().optional(),
+  page: z.coerce.number().optional(),
+  size: z.coerce.number().optional(),
+  sortBy: z.string().optional(),
+  sortOrder: z.enum(['asc', 'desc']).optional(),
 });
 
-export const GetVehiclesResponseSchema = VehicleSchema.array();
+export const GetVehiclesResponseSchema = z.object({
+  content: VehicleSchema.array(),
+  page: z.number(),
+  size: z.number(),
+  totalElements: z.number(),
+  totalPages: z.number(),
+  hasNext: z.boolean(),
+  hasPrevious: z.boolean(),
+  first: z.boolean(),
+  last: z.boolean(),
+});
 
 // GET VEHICLE BY ID
 export const GetVehicleByIdParamSchema = VehicleParamSchema;
@@ -189,18 +208,23 @@ export const DeleteVehicleResponseSchema = z.void();
 // UPDATE VEHICLE STATUS
 export const UpdateVehicleStatusParamSchema = VehicleParamSchema;
 export const UpdateVehicleStatusRequestSchema = z.object({
-  available: z.boolean(),
+  status: CarStatusEnum,
   reason: z.string().optional(),
 });
-export const UpdateVehicleStatusResponseSchema = z.void();
+export const UpdateVehicleStatusResponseSchema = VehicleSchema;
 
 // UPDATE VEHICLE PRICE
 export const UpdateVehiclePriceParamSchema = VehicleParamSchema;
 export const UpdateVehiclePriceRequestSchema = z.object({
-  pricePerDay: z.number(),
+  pricePerDay: z.number().min(0, 'Price per day must be positive'),
+  pricePerWeek: z.number().min(0, 'Price per week must be positive').optional(),
+  pricePerMonth: z.number().min(0, 'Price per month must be positive').optional(),
+  currency: CurrencyEnum,
+  deposit: z.number().min(0, 'Deposit must be positive'),
+  discountPercentage: z.number().min(0).max(100).optional(),
   reason: z.string().optional(),
 });
-export const UpdateVehiclePriceResponseSchema = z.void();
+export const UpdateVehiclePriceResponseSchema = VehicleSchema;
 
 // APPROVE VEHICLE
 export const ApproveVehicleParamSchema = VehicleParamSchema;

@@ -4,9 +4,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-interface VehicleDetailsPageProps {
-  params: Promise<{ id: string }>;
-}
+interface VehicleDetailsPageProps extends PageProps<'/vehicles/[id]'> {}
 
 export default async function VehicleDetailsPage({ params }: VehicleDetailsPageProps) {
   const { id } = await params;
